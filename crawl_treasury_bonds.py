@@ -663,7 +663,7 @@ def create_excel(normal_bonds, savings_bonds, market_operations, output_file):
     print(f'\n数据已保存到: {output_file}')
 
 def main():
-    output_file = '/Users/ankangli/.doubao/chats/2026-06-25/new-chat/国债业务公告数据_v2.xlsx'
+    output_file = ''
     
     normal_bonds, savings_bonds, market_operations = extract_all_data()
     
@@ -679,21 +679,21 @@ def main():
     
     # 预览前几条
     print('\n国债发行数据预览（前5条）:')
-    print(f'{'公告标题':<30} {'类型':<15} {'计划发行':<10} {'期限':<8} {'利率':<8}')
+    print(f'{"公告标题":<30} {"类型":<15} {"计划发行":<10} {"期限":<8} {"利率":<8}')
     print('-' * 75)
     for data in normal_bonds[:5]:
         print(f'{str(data["公告标题"])[:28]:<30} {str(data["国债类型"])[:13]:<15} {str(data["计划发行(亿元)"]):<10} {str(data["期限"]):<8} {str(data["票面利率/收益率"]):<8}')
     
     if savings_bonds:
         print('\n储蓄国债数据预览（前5条）:')
-        print(f'{'公告标题':<30} {'类型':<15} {'计划发行':<10} {'期限':<8} {'利率':<8}')
+        print(f'{"公告标题":<30} {"类型":<15} {"计划发行":<10} {"期限":<8} {"利率":<8}')
         print('-' * 75)
         for data in savings_bonds[:5]:
             print(f'{str(data["公告标题"])[:28]:<30} {str(data["国债类型"])[:13]:<15} {str(data["计划发行(亿元)"]):<10} {str(data["期限"]):<8} {str(data["票面利率/收益率"]):<8}')
     
     if market_operations:
         print('\n做市操作数据预览（前5条）:')
-        print(f'{'公告标题':<30} {'操作券种':<25} {'期限':<8} {'操作额':<8} {'收益率':<8}')
+        print(f'{"公告标题":<30} {"类型":<15} {"计划发行":<10} {"期限":<8} {"利率":<8}')
         print('-' * 85)
         for data in market_operations[:5]:
             print(f'{str(data["公告标题"])[:28]:<30} {str(data["操作券种"])[:23]:<25} {str(data["期限"]):<8} {str(data["操作额(亿元)"]):<8} {str(data["收益率(%)"]):<8}')
