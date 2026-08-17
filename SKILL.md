@@ -58,7 +58,6 @@ pip install requests beautifulsoup4 openpyxl
 
 #### 步骤 2：运行爬虫脚本
 ```bash
-cd scripts
 python3 crawl_treasury_bonds.py
 ```
 
@@ -321,7 +320,7 @@ while empty_pages < max_empty:
 
 ### 6.1 爬虫脚本模板
 
-完整脚本位于 `scripts/crawl_treasury_bonds.py`，可直接使用。
+完整脚本位于 `crawl_treasury_bonds.py`，可直接使用。
 
 **核心函数说明：**
 
@@ -403,13 +402,16 @@ while empty_pages < max_empty:
 ## 八、文件结构
 
 ```
-treasury-bond-scraper/
-├── SKILL.md                    # 本文件，Skill 说明文档
-├── README.md                   # 快速上手指南
-├── scripts/
-│   └── crawl_treasury_bonds.py # 爬虫脚本（可直接运行）
-└── examples/
-    └── 数据示例.xlsx           # 示例数据文件
+china-bond-announcement-scraper/
+├── SKILL.md                     # 本文件，Skill 说明文档
+├── README.md                    # 快速上手指南（英文）
+├── README.zh-CN.md              # 快速上手指南（中文）
+├── docs/
+│   └── architecture.md          # 架构与设计说明
+├── crawl_treasury_bonds.py      # 爬虫脚本（可直接运行）
+├── .env.example                 # 可选环境变量示例
+├── 国债业务公告数据示例.xlsx      # 示例数据文件
+└── 国债业务公告数据.xlsx          # 运行输出（已被 .gitignore 忽略）
 ```
 
 ---

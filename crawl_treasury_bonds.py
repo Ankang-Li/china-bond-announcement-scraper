@@ -14,17 +14,26 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import os
+import random
 import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment
 from urllib.parse import urljoin
 import time
 from datetime import datetime
 
-# 基础配置
-BASE_URL = 'https://zwgls.mof.gov.cn/ywgg/'
+# 基础配置（可通过环境变量覆盖，见 .env.example）
+BASE_URL = os.environ.get('CGB_BASE_URL', 'https://zwgls.mof.gov.cn/ywgg/')
 HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    'User-Agent': os.environ.get(
+        'CGB_USER_AGENT',
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 '
+        '(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    )
 }
+DELAY_MIN = float(os.environ.get('CGB_DELAY_MIN', '0.3'))
+DELAY_MAX = float(os.environ.get('CGB_DELAY_MAX', '0.5'))
+OUTPUT_FILE = os.environ.get('CGB_OUTPUT_FILE', '国债业务公告数据.xlsx')
 
 def get_list_page(page_num):
     """获取列表页内容"""
@@ -504,7 +513,7 @@ def extract_all_data():
             all_announcements.extend(announcements)
         
         page_num += 1
-        time.sleep(0.5)  # 礼貌爬取
+        time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))  # 礼貌爬取
     
     print(f'\n共找到 {len(all_announcements)} 条国债业务公告')
     
@@ -553,7 +562,7 @@ def extract_all_data():
             data = extract_normal_bond_data(content, ann['title'], ann['year'], ann['num'], ann['url'])
             normal_bonds.append(data)
         
-        time.sleep(0.3)  # 礼貌爬取
+        time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))  # 礼貌爬取
     
     return normal_bonds, savings_bonds, market_operations
 
@@ -663,7 +672,7 @@ def create_excel(normal_bonds, savings_bonds, market_operations, output_file):
     print(f'\n数据已保存到: {output_file}')
 
 def main():
-    output_file = ''
+    output_file = OUTPUT_FILE
     
     normal_bonds, savings_bonds, market_operations = extract_all_data()
     
